@@ -14,18 +14,30 @@ let package = Package(
             targets: ["LogSnap"]),
     ],
     dependencies: [
-        // Dependencies would go here
+        // Dependencies declare other packages that this package depends on.
+        // You can add external dependencies here if needed
         // For example:
-        // .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "5.0.0"),
+        // .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.6.1")),
     ],
     targets: [
         .target(
             name: "LogSnap",
-            dependencies: [],
-            path: "LogSnap"),
+            dependencies: [
+                // Add any dependencies from above, e.g., "Alamofire"
+            ],
+            path: "LogSnap",
+            exclude: [
+                // Files to exclude from the package (if any)
+                "Preview Content"
+            ],
+            resources: [
+                // Include any resources needed by the package
+                .process("Resources/Assets.xcassets")
+            ]),
         .testTarget(
             name: "LogSnapTests",
             dependencies: ["LogSnap"],
             path: "LogSnapTests"),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
