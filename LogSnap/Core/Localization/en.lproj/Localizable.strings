@@ -1,0 +1,40 @@
+/* Settings */
+"Settings" = "Settings";
+"Appearance & Language" = "Appearance & Language";
+"Language" = "Language";
+"Automatic" = "Automatic";
+"Light" = "Light";
+"Dark" = "Dark";
+"Sync & Export" = "Sync & Export";
+"iCloud Sync" = "iCloud Sync";
+"Export to CSV" = "Export to CSV";
+"Export to Excel" = "Export to Excel";
+"Export Options" = "Export Options";
+"Choose what to export to %@" = "Choose what to export to %@";
+"All Products" = "All Products";
+"All Suppliers" = "All Suppliers";
+"Delete All Data" = "Delete All Data";
+"Are you sure you want to delete all data? This action cannot be undone." = "Are you sure you want to delete all data? This action cannot be undone.";
+"Delete" = "Delete";
+"Exporting..." = "Exporting...";
+"Export Failed" = "Export Failed";
+
+/* Help & Support */
+"Help & Support" = "Help & Support";
+"Review on App Store" = "Review on App Store";
+"Contact via Email" = "Contact via Email";
+"Get Support" = "Get Support";
+"Share App" = "Share App";
+
+/* About */
+"About" = "About";
+"App Version" = "App Version";
+"Privacy Policy" = "Privacy Policy";
+"Terms of Use" = "Terms of Use";
+
+/* General */
+"Cancel" = "Cancel";
+"Save" = "Save";
+"Products" = "Products";
+"Suppliers" = "Suppliers";
+"OK" = "OK"; 

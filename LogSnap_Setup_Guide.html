@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogSnap - Xcode Project Setup Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #0066cc;
+        }
+        .step {
+            background-color: #f8f8f8;
+            border-left: 5px solid #0066cc;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .note {
+            background-color: #fffde7;
+            border-left: 5px solid #ffd600;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .button {
+            display: inline-block;
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>LogSnap - Xcode Project Setup Guide</h1>
+    
+    <div class="note">
+        <strong>Note:</strong> This guide will help you set up a new Xcode project for LogSnap and incorporate the files we've already created.
+    </div>
+    
+    <h2>Step 1: Create a New Xcode Project</h2>
+    
+    <div class="step">
+        <h3>Launch Xcode</h3>
+        <p>Open Xcode from your Applications folder or Spotlight.</p>
+        <p>If Xcode is not installed, download it from the Mac App Store.</p>
+    </div>
+    
+    <div class="step">
+        <h3>Create a New Project</h3>
+        <p>From Xcode's welcome screen, click "Create a new Xcode project" or go to File > New > Project.</p>
+    </div>
+    
+    <div class="step">
+        <h3>Choose the iOS App Template</h3>
+        <p>Choose "App" under the iOS section and click "Next".</p>
+    </div>
+    
+    <div class="step">
+        <h3>Configure Your Project</h3>
+        <p>Enter the following details:</p>
+        <ul>
+            <li><strong>Product Name:</strong> LogSnap</li>
+            <li><strong>Organization Identifier:</strong> com.yourname.logsnap (use your own domain if you have one)</li>
+            <li><strong>Interface:</strong> SwiftUI</li>
+            <li><strong>Life Cycle:</strong> SwiftUI App</li>
+            <li><strong>Language:</strong> Swift</li>
+            <li>✓ <strong>Use Core Data</strong> (ensure this is checked)</li>
+            <li>✓ <strong>Include Tests</strong> (optional)</li>
+        </ul>
+        <p>Click "Next".</p>
+    </div>
+    
+    <div class="step">
+        <h3>Choose a Location</h3>
+        <p>Select where you want to save your project, preferably in a new folder.</p>
+        <p>Make sure "Create Git repository" is checked for version control.</p>
+        <p>Click "Create".</p>
+    </div>
+    
+    <h2>Step 2: Integrate Existing Code</h2>
+    
+    <div class="step">
+        <h3>Create Project Structure</h3>
+        <p>In Xcode's Project Navigator (left sidebar), create the following folder structure:</p>
+        <pre>
+LogSnap/
+├── App/
+├── Core/
+│   ├── Extensions/
+│   ├── Utilities/
+│   └── Localization/
+├── Data/
+│   ├── CoreData/
+│   └── Repositories/
+├── Features/
+│   ├── Products/
+│   │   ├── Models/
+│   │   ├── ViewModels/
+│   │   └── Views/
+│   └── Suppliers/
+│       ├── Models/
+│       ├── ViewModels/
+│       └── Views/
+├── UI/
+│   ├── Components/
+│   └── Themes/
+└── Main/</pre>
+        <p>To create folders: Right-click on the parent folder > New Group > Name it accordingly.</p>
+    </div>
+    
+    <div class="step">
+        <h3>Add Files to Project</h3>
+        <p>For each Swift file we've created:</p>
+        <ol>
+            <li>Go to where you stored all the code files we created</li>
+            <li>Copy the file content or the file itself</li>
+            <li>In Xcode, right-click on the appropriate folder in the Project Navigator</li>
+            <li>Select "New File..." and choose "Swift File"</li>
+            <li>Name it exactly as the original file</li>
+            <li>Paste the content if you copied it, or if you have the file, drag it into the folder</li>
+        </ol>
+    </div>
+
+    <div class="step">
+        <h3>Pay Special Attention to:</h3>
+        <ul>
+            <li>Make sure <code>CoreDataManager.swift</code> is properly integrated and matches the generated CoreData model</li>
+            <li>Ensure all localization files are in the correct places</li>
+            <li>Check that the <code>LogSnapApp.swift</code> file properly references the <code>MainTabView</code></li>
+        </ul>
+    </div>
+    
+    <h2>Step 3: Configure the Project</h2>
+    
+    <div class="step">
+        <h3>Set Up Localization</h3>
+        <p>To enable localization for English and Portuguese:</p>
+        <ol>
+            <li>Select your project in the Project Navigator</li>
+            <li>Select the "Info" tab</li>
+            <li>Under "Localizations", click the "+" button</li>
+            <li>Add "Portuguese (Brazil)" or "Portuguese (Portugal)"</li>
+            <li>Select which files to localize</li>
+        </ol>
+    </div>
+    
+    <div class="step">
+        <h3>Set Deployment Target</h3>
+        <p>Make sure your deployment target is set to iOS 15.0 or higher.</p>
+    </div>
+    
+    <h2>Step 4: Build and Run</h2>
+    
+    <div class="step">
+        <h3>Test Your App</h3>
+        <p>Click the Play button (▶) in the top-left corner of Xcode to build and run your app in the simulator.</p>
+        <p>If you encounter any build errors, check the console for details and fix them one by one.</p>
+    </div>
+    
+    <div class="note">
+        <h3>Common Build Issues:</h3>
+        <ul>
+            <li><strong>Missing files:</strong> Ensure all referenced files are added to the project</li>
+            <li><strong>Duplicate declarations:</strong> Make sure each component is defined only once</li>
+            <li><strong>CoreData model mismatch:</strong> Verify your CoreData model matches the entities used in the code</li>
+            <li><strong>Missing imports:</strong> Check that all required frameworks are imported</li>
+        </ul>
+    </div>
+    
+    <h2>Need Help?</h2>
+    <p>If you encounter issues setting up the project, see the detailed documentation in the README.md file or contact support.</p>
+    
+    <a href="README.md" class="button">View Full Documentation</a>
+</body>
+</html> 

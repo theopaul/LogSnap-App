@@ -1,0 +1,43 @@
+HOW TO OPEN LOGSNAP IN XCODE
+==============================
+
+Since we've created all the Swift code files but not a complete Xcode project file (.xcodeproj), 
+you need to create a new Xcode project and add our files to it. Here's how:
+
+QUICK INSTRUCTIONS:
+------------------
+
+1. Open Xcode
+2. Choose "Create a new Xcode project"
+3. Select "App" under iOS templates
+4. Fill in these details:
+   - Product Name: LogSnap
+   - Interface: SwiftUI
+   - Life Cycle: SwiftUI App
+   - Language: Swift
+   - ✓ Use Core Data
+5. Choose a location to save the project
+6. Click "Create"
+
+7. Now create the folder structure in Xcode:
+   - Right-click on the LogSnap folder in the Project Navigator
+   - Select "New Group" for each main folder (App, Core, Data, Features, UI, Main)
+   - Create subfolders within each main folder
+
+8. Add our code files to the appropriate folders:
+   - Right-click on a folder
+   - Choose "Add Files to LogSnap..."
+   - Navigate to where you have our code files
+   - Select the files for that folder
+   - Click "Add"
+
+9. Set up localization:
+   - Select your project in the Project Navigator
+   - Go to the "Info" tab
+   - Add "Portuguese (Brazil)" under Localizations
+
+10. Build and run the app (press the Play button)
+
+For detailed step-by-step instructions with visuals, open the LogSnap_Setup_Guide.html file in your web browser.
+
+If you have any questions or encounter issues, refer to the README.md file for more details about the project structure. 
