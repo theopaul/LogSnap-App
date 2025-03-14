@@ -2,30 +2,8 @@ import Foundation
 import CoreData
 import UIKit
 
-// Specify the full module name to avoid ambiguity
-extension LogSnap.ContactPerson {
-    var businessCardsArray: [LogSnap.BusinessCard] {
-        let cards = businessCards?.allObjects as? [LogSnap.BusinessCard] ?? []
-        return cards
-    }
-    
-    func addCard(_ card: LogSnap.BusinessCard) {
-        addToBusinessCards(card)
-    }
-    
-    func removeCard(_ card: LogSnap.BusinessCard) {
-        removeFromBusinessCards(card)
-    }
-    
-    func isEmpty() -> Bool {
-        return name?.isEmpty ?? true && 
-               jobTitle?.isEmpty ?? true && 
-               phone?.isEmpty ?? true && 
-               whatsapp?.isEmpty ?? true && 
-               wechatId?.isEmpty ?? true && 
-               email?.isEmpty ?? true
-    }
-    
+// Extensions for the ContactPerson entity
+extension ContactPerson {
     // Initialize default values when a new entity is created
     public override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -37,5 +15,30 @@ extension LogSnap.ContactPerson {
         wechatId = ""
         email = ""
         isPrimary = false
+    }
+    
+    // Check if the contact is empty
+    func isEmpty() -> Bool {
+        return name?.isEmpty ?? true && 
+               jobTitle?.isEmpty ?? true && 
+               phone?.isEmpty ?? true && 
+               whatsapp?.isEmpty ?? true && 
+               wechatId?.isEmpty ?? true && 
+               email?.isEmpty ?? true
+    }
+    
+    // Get business card image
+    var businessCardImage: UIImage? {
+        return businessCard?.cardImage as? UIImage
+    }
+    
+    // Set the business card for this contact
+    func setBusinessCard(_ card: BusinessCard) {
+        self.businessCard = card
+    }
+    
+    // Remove the business card from this contact
+    func removeBusinessCard() {
+        self.businessCard = nil
     }
 } 

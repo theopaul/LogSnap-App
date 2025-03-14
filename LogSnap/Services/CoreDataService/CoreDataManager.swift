@@ -50,13 +50,7 @@ class CoreDataManager {
         contact.isPrimary = true
         contact.supplier = supplier
         
-        do {
-            try context.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        
+        try? context.save()
         return context
     }()
     
@@ -140,6 +134,28 @@ class CoreDataManager {
                 object: container.persistentStoreCoordinator
             )
         }
+        
+        // Register the transformer for UIImage
+        ValueTransformer.setValueTransformer(
+            UIImageTransformer(),
+            forName: NSValueTransformerName("UIImageTransformer")
+        )
+        
+        // Create and configure the container
+        let modelName = "LogSnap"
+        
+        // First try to find the model URL
+        guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd") ??
+                             Bundle.main.url(forResource: "\(modelName)", withExtension: "xcdatamodeld") else {
+            fatalError("Failed to find Core Data model: \(modelName)")
+        }
+        
+        // Check if model exists and can be created
+        guard NSManagedObjectModel(contentsOf: modelURL) != nil else {
+            fatalError("Failed to load Core Data model: \(modelName)")
+        }
+        
+        // No longer trying to set managedObjectModel, which doesn't exist
     }
     
     @objc func processRemoteStoreChange(_ notification: Notification) {
@@ -245,7 +261,8 @@ class CoreDataManager {
     func createBusinessCard(for image: UIImage) -> BusinessCard {
         let card = BusinessCard(context: container.viewContext)
         // Always optimize images before storing in Core Data
-        card.frontImage = image.optimizedForStorage()
+        card.cardImage = image.optimizedForStorage()
+        card.id = UUID()
         return card
     }
 }

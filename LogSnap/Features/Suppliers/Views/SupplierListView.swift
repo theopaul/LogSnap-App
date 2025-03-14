@@ -14,24 +14,35 @@ struct SupplierListView: View {
         }
         .navigationTitle(LocalizedStringKey("Suppliers"))
         .sheet(isPresented: $showAddSupplier) {
-            NavigationStack {
-                AddSupplierView(viewModel: viewModel)
-            }
-            .onDisappear {
-                // Ensure we refresh data after add/edit operation
-                viewModel.refreshSuppliers()
+            if #available(iOS 16.0, *) {
+                NavigationStack {
+                    AddSupplierView(viewModel: viewModel)
+                }
+                .onDisappear {
+                    // Ensure we refresh data after add/edit operation
+                    viewModel.refreshSuppliers()
+                }
+            } else {
+                // Fallback for iOS 15 or earlier
+                NavigationView {
+                    AddSupplierView(viewModel: viewModel)
+                }
+                .onDisappear {
+                    // Ensure we refresh data after add/edit operation
+                    viewModel.refreshSuppliers()
+                }
             }
         }
         .sheet(isPresented: $showSettingsView) {
             NavigationView {
                 SettingsView(useOwnNavigation: false)
-                    .onDisappear {
-                        // Allow a moment for the view to fully dismiss
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            // Reset any state or reload data if needed after settings close
-                            viewModel.fetchSuppliers()
-                        }
-                    }
+            }
+            .onDisappear {
+                // Allow a moment for the view to fully dismiss
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    // Reset any state or reload data if needed after settings close
+                    viewModel.fetchSuppliers()
+                }
             }
         }
         .alert(isPresented: $viewModel.showAlert) {

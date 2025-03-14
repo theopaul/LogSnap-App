@@ -664,39 +664,26 @@ class ProductViewModel: ObservableObject {
 
 // MARK: - Product Extension for Supplier Relationship
 extension Product {
-    // Dynamic property to access supplier
-    var supplier: Supplier? {
-        get {
-            // Try to find the supplier using the ID stored in UserDefaults
-            let productId = self.objectID.uriRepresentation().absoluteString
-            
-            // Get the CoreDataManager instance directly
-            let cdManager = CoreDataManager.shared
-            
-            guard let supplierIdString = UserDefaults.standard.string(forKey: "supplier_\(productId)"),
-                  let url = URL(string: supplierIdString),
-                  let objectId = cdManager.container.viewContext.persistentStoreCoordinator?.managedObjectID(forURIRepresentation: url) else {
-                return nil
-            }
-            
-            // Return the supplier if found
-            do {
-                return try cdManager.container.viewContext.existingObject(with: objectId) as? Supplier
-            } catch {
-                print("Error fetching supplier: \(error)")
-                return nil
-            }
+    // Custom method to access supplier through relationship
+    func getSupplierSafely() -> Supplier? {
+        // Try to find the supplier using the ID stored in UserDefaults
+        let productId = self.objectID.uriRepresentation().absoluteString
+        
+        // Get the CoreDataManager instance directly
+        let cdManager = CoreDataManager.shared
+        
+        guard let supplierIdString = UserDefaults.standard.string(forKey: "supplier_\(productId)"),
+              let url = URL(string: supplierIdString),
+              let objectId = cdManager.container.viewContext.persistentStoreCoordinator?.managedObjectID(forURIRepresentation: url) else {
+            return nil
         }
-        set {
-            // Store the supplier ID in UserDefaults
-            let productId = self.objectID.uriRepresentation().absoluteString
-            
-            if let supplier = newValue {
-                let supplierId = supplier.objectID.uriRepresentation().absoluteString
-                UserDefaults.standard.set(supplierId, forKey: "supplier_\(productId)")
-            } else {
-                UserDefaults.standard.removeObject(forKey: "supplier_\(productId)")
-            }
+        
+        // Return the supplier if found
+        do {
+            return try cdManager.container.viewContext.existingObject(with: objectId) as? Supplier
+        } catch {
+            print("Error fetching supplier: \(error)")
+            return nil
         }
     }
 }

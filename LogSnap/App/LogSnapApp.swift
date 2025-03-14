@@ -10,7 +10,7 @@ struct LogSnapContentView: View {
     var body: some View {
         MainTabView()
             .environment(\.managedObjectContext, viewContext)
-            .onChange(of: scenePhase) { _, newPhase in
+            .onChange(of: scenePhase) { newPhase in
                 if newPhase == .inactive || newPhase == .background {
                     saveAction(viewContext)
                 }

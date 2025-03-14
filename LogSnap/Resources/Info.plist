@@ -18,6 +18,8 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MinimumOSVersion</key>
+	<string>16.0</string>
 	<key>NSCameraUsageDescription</key>
 	<string>LogSnap needs access to your camera to capture product images.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

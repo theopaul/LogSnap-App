@@ -82,7 +82,8 @@ struct SettingsView: View {
                     )
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                .onChange(of: userSettings.iCloudSyncEnabled) { oldValue, newValue in
+                .onChange(of: userSettings.iCloudSyncEnabled) { newValue in
+                    let oldValue = !newValue
                     if oldValue != newValue {
                         showingICloudAlert = true
                     }
@@ -228,7 +229,7 @@ struct SettingsView: View {
                 recipients: ["support@logsnap.com"]
             )
         }
-        .onChange(of: viewModel.exportResult) { _, newValue in
+        .onChange(of: viewModel.exportResult) { newValue in
             if let result = newValue {
                 showExportResult(result)
             }
