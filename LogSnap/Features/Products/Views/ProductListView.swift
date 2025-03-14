@@ -14,35 +14,24 @@ struct ProductListView: View {
         }
         .navigationTitle(LocalizedStringKey("Products"))
         .sheet(isPresented: $showAddProduct) {
-            if #available(iOS 16.0, *) {
-                NavigationStack {
-                    AddProductView(viewModel: viewModel, isPresented: $showAddProduct)
-                }
-                .onDisappear {
-                    // Ensure we refresh data after add/edit operation
-                    viewModel.refreshProducts()
-                }
-            } else {
-                // Fallback for iOS 15 or earlier
-                NavigationView {
-                    AddProductView(viewModel: viewModel, isPresented: $showAddProduct)
-                }
-                .onDisappear {
-                    // Ensure we refresh data after add/edit operation
-                    viewModel.refreshProducts()
-                }
+            NavigationStack {
+                AddProductView(viewModel: viewModel, isPresented: $showAddProduct)
+            }
+            .onDisappear {
+                // Ensure we refresh data after add/edit operation
+                viewModel.refreshProducts()
             }
         }
         .sheet(isPresented: $showSettingsView) {
             NavigationView {
                 SettingsView(useOwnNavigation: false)
-            }
-            .onDisappear {
-                // Allow a moment for the view to fully dismiss
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    // Reset any state or reload data if needed after settings close
-                    viewModel.fetchProducts()
-                }
+                    .onDisappear {
+                        // Allow a moment for the view to fully dismiss
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            // Reset any state or reload data if needed after settings close
+                            viewModel.fetchProducts()
+                        }
+                    }
             }
         }
         .alert(isPresented: $viewModel.showAlert) {

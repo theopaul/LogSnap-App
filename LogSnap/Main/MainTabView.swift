@@ -3,12 +3,6 @@ import UIKit
 import AVFoundation
 import CoreData
 
-// Import the specific SwiftUI ToolbarContentBuilder to disambiguate toolbar methods
-#if canImport(SwiftUI)
-import struct SwiftUI.ToolbarContentBuilder
-import protocol SwiftUI.ToolbarContent
-#endif
-
 struct MainTabView: View {
     @State private var selectedTab = 0
     @State private var showPhotoOptions = false
@@ -26,210 +20,101 @@ struct MainTabView: View {
         ZStack {
             TabView(selection: $selectedTab) {
                 // DASHBOARD TAB
-                if #available(iOS 16.0, *) {
-                    NavigationStack {
-                        DashboardView()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Dashboard"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                }
-                            })
-                            .id("DashboardTab")
-                    }
-                    .tabItem {
-                        Label(LocalizedStringKey("Dashboard"), systemImage: "house.fill")
-                    }
-                    .tag(0)
-                } else {
-                    // Fallback for iOS 15
-                    NavigationView {
-                        DashboardView()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Dashboard"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                }
-                            })
-                            .id("DashboardTab")
-                    }
-                    .navigationViewStyle(.stack)
-                    .tabItem {
-                        Label(LocalizedStringKey("Dashboard"), systemImage: "house.fill")
-                    }
-                    .tag(0)
+                NavigationStack {
+                    DashboardView()
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                Text(LocalizedStringKey("Dashboard"))
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                            }
+                        }
+                        .id("DashboardTab")
                 }
+                .tabItem {
+                    Label(LocalizedStringKey("Dashboard"), systemImage: "house.fill")
+                }
+                .tag(0)
                 
                 // PRODUCTS TAB
-                if #available(iOS 16.0, *) {
-                    NavigationStack {
-                        ProductListView()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Products"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
+                NavigationStack {
+                    ProductListView()
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                Text(LocalizedStringKey("Products"))
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                            }
+                            ToolbarItem(placement: .primaryAction) {
+                                Button(action: {
+                                    // Create new product
+                                    showProductForm()
+                                }) {
+                                    Image(systemName: "plus")
                                 }
-                                ToolbarItem(placement: .primaryAction) {
-                                    Button(action: {
-                                        // Create new product
-                                        showProductForm()
-                                    }) {
-                                        Image(systemName: "plus")
-                                    }
-                                }
-                            })
-                            .id("ProductsTab")
-                    }
-                    .tabItem {
-                        Label(LocalizedStringKey("Products"), systemImage: "shippingbox.fill")
-                    }
-                    .tag(1)
-                } else {
-                    // Fallback for iOS 15
-                    NavigationView {
-                        ProductListView()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Products"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                }
-                                ToolbarItem(placement: .primaryAction) {
-                                    Button(action: {
-                                        // Create new product
-                                        showProductForm()
-                                    }) {
-                                        Image(systemName: "plus")
-                                    }
-                                }
-                            })
-                            .id("ProductsTab")
-                    }
-                    .navigationViewStyle(.stack)
-                    .tabItem {
-                        Label(LocalizedStringKey("Products"), systemImage: "shippingbox.fill")
-                    }
-                    .tag(1)
+                            }
+                        }
+                        .id("ProductsTab")
                 }
+                .tabItem {
+                    Label(LocalizedStringKey("Products"), systemImage: "shippingbox.fill")
+                }
+                .tag(1)
                 
                 // CENTER CAMERA TAB
-                if #available(iOS 16.0, *) {
-                    NavigationStack {
-                        Color.clear // Empty view, we'll handle the camera action directly
-                    }
-                    .tabItem {
-                        Label(LocalizedStringKey("Camera"), systemImage: "camera.fill")
-                    }
-                    .tag(2)
-                } else {
-                    NavigationView {
-                        Color.clear // Empty view, we'll handle the camera action directly
-                    }
-                    .navigationViewStyle(.stack)
-                    .tabItem {
-                        Label(LocalizedStringKey("Camera"), systemImage: "camera.fill")
-                    }
-                    .tag(2)
+                NavigationStack {
+                    Color.clear // Empty view, we'll handle the camera action directly
                 }
+                .tabItem {
+                    Label(LocalizedStringKey("Camera"), systemImage: "camera.fill")
+                }
+                .tag(2)
                 
                 // SUPPLIERS TAB
-                if #available(iOS 16.0, *) {
-                    NavigationStack {
-                        SupplierListView()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Suppliers"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
+                NavigationStack {
+                    SupplierListView()
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                Text(LocalizedStringKey("Suppliers"))
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                            }
+                            ToolbarItem(placement: .primaryAction) {
+                                Button(action: {
+                                    // Create new supplier
+                                    showSupplierForm()
+                                }) {
+                                    Image(systemName: "plus")
                                 }
-                                ToolbarItem(placement: .primaryAction) {
-                                    Button(action: {
-                                        // Create new supplier
-                                        showSupplierForm()
-                                    }) {
-                                        Image(systemName: "plus")
-                                    }
-                                }
-                            })
-                            .id("SuppliersTab")
-                    }
-                    .tabItem {
-                        Label(LocalizedStringKey("Suppliers"), systemImage: "building.2.fill")
-                    }
-                    .tag(3)
-                } else {
-                    NavigationView {
-                        SupplierListView()
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Suppliers"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                }
-                                ToolbarItem(placement: .primaryAction) {
-                                    Button(action: {
-                                        // Create new supplier
-                                        showSupplierForm()
-                                    }) {
-                                        Image(systemName: "plus")
-                                    }
-                                }
-                            })
-                            .id("SuppliersTab")
-                    }
-                    .navigationViewStyle(.stack)
-                    .tabItem {
-                        Label(LocalizedStringKey("Suppliers"), systemImage: "building.2.fill")
-                    }
-                    .tag(3)
+                            }
+                        }
+                        .id("SuppliersTab")
                 }
+                .tabItem {
+                    Label(LocalizedStringKey("Suppliers"), systemImage: "building.2.fill")
+                }
+                .tag(3)
                 
                 // SETTINGS TAB
-                if #available(iOS 16.0, *) {
-                    NavigationStack {
-                        SettingsView(useOwnNavigation: false)
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Settings"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                }
-                            })
-                            .id("SettingsTab")
-                    }
-                    .tabItem {
-                        Label(LocalizedStringKey("Settings"), systemImage: "gear")
-                    }
-                    .tag(4)
-                } else {
-                    NavigationView {
-                        SettingsView(useOwnNavigation: false)
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar(content: {
-                                ToolbarItem(placement: .principal) {
-                                    Text(LocalizedStringKey("Settings"))
-                                        .font(.headline)
-                                        .foregroundColor(.primary)
-                                }
-                            })
-                            .id("SettingsTab")
-                    }
-                    .navigationViewStyle(.stack)
-                    .tabItem {
-                        Label(LocalizedStringKey("Settings"), systemImage: "gear")
-                    }
-                    .tag(4)
+                NavigationStack {
+                    SettingsView(useOwnNavigation: false)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                Text(LocalizedStringKey("Settings"))
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                            }
+                        }
+                        .id("SettingsTab")
                 }
+                .tabItem {
+                    Label(LocalizedStringKey("Settings"), systemImage: "gear")
+                }
+                .tag(4)
             }
             .onChange(of: selectedTab) { oldValue, newValue in
                 // Handle center camera tab selection

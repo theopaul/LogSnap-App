@@ -4,9 +4,6 @@ import UIKit
 import CloudKit
 
 class CoreDataManager {
-    // Simplified shared instance
-    static let shared = CoreDataManager()
-    
     static var previewContext: NSManagedObjectContext = {
         let manager = CoreDataManager(inMemory: true)
         let context = manager.container.viewContext
@@ -50,19 +47,42 @@ class CoreDataManager {
         contact.isPrimary = true
         contact.supplier = supplier
         
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        
         return context
     }()
     
     let container: NSPersistentContainer
     private let userSettings: UserSettings?
     
-    // Remove the old shared instance implementation
-    // private static var sharedInstance: CoreDataManager?
+    // Updated singleton pattern
+    private static var sharedInstance: CoreDataManager?
     
-    // Keep the factory method for backward compatibility
+    static var shared: CoreDataManager {
+        if let existingInstance = sharedInstance {
+            return existingInstance
+        }
+        
+        // Create a default instance without UserSettings
+        let newInstance = CoreDataManager()
+        sharedInstance = newInstance
+        return newInstance
+    }
+    
+    // Factory method that creates a new instance or returns an existing one with UserSettings
     static func shared(with userSettings: UserSettings) -> CoreDataManager {
-        return shared
+        if let existingInstance = sharedInstance {
+            return existingInstance
+        }
+        
+        let newInstance = CoreDataManager(userSettings: userSettings)
+        sharedInstance = newInstance
+        return newInstance
     }
     
     init(inMemory: Bool = false, userSettings: UserSettings? = nil) {
@@ -93,7 +113,7 @@ class CoreDataManager {
         
         // Configure CloudKit integration if enabled
         if isCloudKitEnabled, let description = container.persistentStoreDescriptions.first {
-            let containerIdentifier = description.cloudKitContainerOptions?.containerIdentifier ??
+            let containerIdentifier = description.cloudKitContainerOptions?.containerIdentifier ?? 
                                       "iCloud.com.yourdeveloper.logsnap"
             
             // Set up CloudKit container options
@@ -134,28 +154,6 @@ class CoreDataManager {
                 object: container.persistentStoreCoordinator
             )
         }
-        
-        // Register the transformer for UIImage
-        ValueTransformer.setValueTransformer(
-            UIImageTransformer(),
-            forName: NSValueTransformerName("UIImageTransformer")
-        )
-        
-        // Create and configure the container
-        let modelName = "LogSnap"
-        
-        // First try to find the model URL
-        guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd") ??
-                             Bundle.main.url(forResource: "\(modelName)", withExtension: "xcdatamodeld") else {
-            fatalError("Failed to find Core Data model: \(modelName)")
-        }
-        
-        // Check if model exists and can be created
-        guard NSManagedObjectModel(contentsOf: modelURL) != nil else {
-            fatalError("Failed to load Core Data model: \(modelName)")
-        }
-        
-        // No longer trying to set managedObjectModel, which doesn't exist
     }
     
     @objc func processRemoteStoreChange(_ notification: Notification) {
@@ -226,7 +224,7 @@ class CoreDataManager {
                 print("Erro ao salvar Core Data: \(nsError), \(nsError.userInfo)")
                 
                 // Tenta resolver conflitos de constraints
-                if nsError.domain == NSCocoaErrorDomain &&
+                if nsError.domain == NSCocoaErrorDomain && 
                    nsError.code == NSValidationMultipleErrorsError {
                     print("Detectados múltiplos erros de validação, tentando resolver individualmente...")
                 }
@@ -261,8 +259,7 @@ class CoreDataManager {
     func createBusinessCard(for image: UIImage) -> BusinessCard {
         let card = BusinessCard(context: container.viewContext)
         // Always optimize images before storing in Core Data
-        card.cardImage = image.optimizedForStorage()
-        card.id = UUID()
+        card.frontImage = image.optimizedForStorage()
         return card
     }
 }
@@ -334,4 +331,4 @@ extension UIImage {
         
         return self
     }
-}
+} 

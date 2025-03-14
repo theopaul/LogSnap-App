@@ -1,0 +1,104 @@
+/* Tab Items */
+"Products" = "Produtos";
+"Suppliers" = "Fornecedores";
+
+/* Product List */
+"Product List" = "Lista de Produtos";
+"Add Product" = "Adicionar Produto";
+"Search products..." = "Pesquisar produtos...";
+"No products found" = "Nenhum produto encontrado";
+"Add your first product to get started!" = "Adicione seu primeiro produto para começar!";
+
+/* Product Details */
+"Product Details" = "Detalhes do Produto";
+"Edit Product" = "Editar Produto";
+"SKU" = "SKU";
+"Category" = "Categoria";
+"Price" = "Preço";
+"Currency" = "Moeda";
+"MOQ" = "Quantidade Mínima";
+"Dimensions" = "Dimensões";
+"Weight" = "Peso";
+"Materials" = "Materiais";
+"Notes" = "Notas";
+"Created" = "Criado";
+"Updated" = "Atualizado";
+"Delete Product" = "Excluir Produto";
+"Are you sure?" = "Tem certeza?";
+"This action cannot be undone." = "Esta ação não pode ser desfeita.";
+"Cancel" = "Cancelar";
+"Delete" = "Excluir";
+
+/* Add/Edit Product */
+"New Product" = "Novo Produto";
+"Product Name" = "Nome do Produto";
+"Enter product name" = "Digite o nome do produto";
+"Enter SKU" = "Digite o SKU";
+"Enter category" = "Digite a categoria";
+"Enter price" = "Digite o preço";
+"Enter currency (e.g. USD)" = "Digite a moeda (ex: BRL)";
+"Enter MOQ" = "Digite a quantidade mínima";
+"Enter dimensions (WxHxD)" = "Digite as dimensões (LxAxP)";
+"Enter weight" = "Digite o peso";
+"Enter materials" = "Digite os materiais";
+"Enter notes" = "Digite as notas";
+"Take Photo" = "Tirar Foto";
+"Choose from Library" = "Escolher da Galeria";
+"Add Image" = "Adicionar Imagem";
+"Save" = "Salvar";
+"Name is required" = "Nome é obrigatório";
+"SKU is required" = "SKU é obrigatório";
+
+/* Supplier List */
+"Supplier List" = "Lista de Fornecedores";
+"Add Supplier" = "Adicionar Fornecedor";
+"Search suppliers..." = "Pesquisar fornecedores...";
+"No suppliers found" = "Nenhum fornecedor encontrado";
+"Add your first supplier to get started!" = "Adicione seu primeiro fornecedor para começar!";
+
+/* Supplier Details */
+"Supplier Details" = "Detalhes do Fornecedor";
+"Edit Supplier" = "Editar Fornecedor";
+"Contact Person" = "Pessoa de Contato";
+"Email" = "Email";
+"Phone" = "Telefone";
+"Address" = "Endereço";
+"Website" = "Site";
+"Delete Supplier" = "Excluir Fornecedor";
+
+/* Add/Edit Supplier */
+"New Supplier" = "Novo Fornecedor";
+"Supplier Name" = "Nome do Fornecedor";
+"Enter supplier name" = "Digite o nome do fornecedor";
+"Enter contact person name" = "Digite o nome da pessoa de contato";
+"Enter email" = "Digite o email";
+"Enter phone number" = "Digite o número de telefone";
+"Enter address" = "Digite o endereço";
+"Enter website" = "Digite o site";
+"Name is required" = "Nome é obrigatório";
+"Invalid email format" = "Formato de email inválido";
+
+/* Camera */
+"Photo Library" = "Galeria de Fotos";
+"Camera" = "Câmera";
+"Take Photo" = "Tirar Foto";
+"Choose Photo" = "Escolher Foto";
+
+/* Common */
+"Loading..." = "Carregando...";
+"Error" = "Erro";
+"Success" = "Sucesso";
+"Information" = "Informação";
+"OK" = "OK";
+"Yes" = "Sim";
+"No" = "Não";
+"Settings" = "Configurações";
+"Theme" = "Tema";
+"Dark Mode" = "Modo Escuro";
+"Language" = "Idioma";
+"English" = "Inglês";
+"Portuguese" = "Português";
+"Save Changes" = "Salvar Alterações";
+"Discard Changes" = "Descartar Alterações";
+"Unsaved Changes" = "Alterações Não Salvas";
+"Do you want to save your changes?" = "Deseja salvar suas alterações?"; 

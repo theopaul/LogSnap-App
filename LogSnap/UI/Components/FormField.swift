@@ -71,7 +71,7 @@ public struct FormField: View {
                                 .padding(8)
                                 .background(Color.primary.opacity(0.05))
                                 .cornerRadius(8)
-                                .onChange(of: text) { newValue in
+                                .onChange(of: text) { oldValue, newValue in
                                     validateInput(newValue)
                                 }
                                 .onTapGesture {
@@ -83,7 +83,7 @@ public struct FormField: View {
                             .textInputAutocapitalization(capitalization)
                             .keyboardType(keyboardType)
                             .padding(.vertical, 12) // Ensure 44pt minimum height
-                            .onChange(of: text) { newValue in
+                            .onChange(of: text) { oldValue, newValue in
                                 validateInput(newValue)
                             }
                             .onTapGesture {
@@ -94,7 +94,7 @@ public struct FormField: View {
                             .textInputAutocapitalization(capitalization)
                             .keyboardType(keyboardType)
                             .padding(.vertical, 12) // Ensure 44pt minimum height
-                            .onChange(of: text) { newValue in
+                            .onChange(of: text) { oldValue, newValue in
                                 validateInput(newValue)
                             }
                             .onTapGesture {

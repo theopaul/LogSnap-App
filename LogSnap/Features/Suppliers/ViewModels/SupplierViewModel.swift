@@ -39,22 +39,17 @@ class SupplierViewModel: ObservableObject {
     private let context: NSManagedObjectContext
     
     // MARK: - Initialization
-    
-    // Explicit initializer for when context is provided
-    init(context: NSManagedObjectContext) {
-        self.context = context
-        setupBindings()
-    }
-    
-    // Default initializer that uses the shared CoreDataManager
-    init() {
-        // Access CoreDataManager.shared directly to avoid initialization issues
-        self.context = CoreDataManager.shared.container.viewContext
-        setupBindings()
-    }
-    
-    private func setupBindings() {
-        // Call existing method to maintain compatibility
+    init(context: NSManagedObjectContext? = nil) {
+        // Get CoreDataManager instance directly with a closure to avoid ambiguity
+        if let providedContext = context {
+            self.context = providedContext
+        } else {
+            let cdManager: CoreDataManager = {
+                let instance = CoreDataManager.shared
+                return instance
+            }()
+            self.context = cdManager.container.viewContext
+        }
         setupSearchSubscription()
     }
     

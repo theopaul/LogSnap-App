@@ -37,7 +37,7 @@ public struct EnhancedImageCarouselView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(Color.primary.opacity(0.1), lineWidth: 1)
                     )
-                    .onChange(of: imageScale) { newValue in
+                    .onChange(of: imageScale) { oldValue, newValue in
                         // Safer way to update dragEnabled - on next event cycle
                         DispatchQueue.main.async {
                             dragEnabled = newValue <= 1.1

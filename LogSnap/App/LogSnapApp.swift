@@ -1,43 +1,69 @@
 import SwiftUI
 import CoreData
 
-struct LogSnapContentView: View {
+struct LogSnapApp: App {
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject var userSettings: UserSettings
-    let viewContext: NSManagedObjectContext
-    let saveAction: (NSManagedObjectContext) -> Void
+    @StateObject private var userSettings = UserSettings()
     
-    var body: some View {
-        MainTabView()
-            .environment(\.managedObjectContext, viewContext)
-            .onChange(of: scenePhase) { newPhase in
-                if newPhase == .inactive || newPhase == .background {
-                    saveAction(viewContext)
+    // Initialize CoreDataManager with UserSettings to respect iCloud sync preference
+    // Use lazy initialization to ensure userSettings is fully initialized first
+    private lazy var coreDataManager: CoreDataManager = {
+        return CoreDataManager.shared(with: userSettings)
+    }()
+    
+    // Initialize CloudKit sync handler
+    private let cloudSyncHandler = CloudKitSyncHandler()
+    
+    var body: some Scene {
+        // Create a body function that explicitly returns the scene
+        // This allows us to create local copies of any values needed for view modifiers
+        let scene = WindowGroup {
+            // Capture any needed values before building the view hierarchy
+            let viewContext = coreDataManager.container.viewContext
+            
+            MainTabView()
+                .environment(\.managedObjectContext, viewContext)
+                .environmentObject(userSettings)
+                // Use simple, direct comparison with enum values
+                .preferredColorScheme({
+                    switch userSettings.appearanceMode {
+                    case .light: return .light
+                    case .dark: return .dark
+                    default: return nil
+                    }
+                }())
+                .onChange(of: scenePhase) { _, newPhase in
+                    if newPhase == .inactive || newPhase == .background {
+                        // Save the context if it has changes
+                        saveContextIfNeeded()
+                    }
                 }
-            }
-            .preferredColorScheme(colorScheme)
+        }
+        
+        return scene
     }
     
-    // Computed property that can safely access userSettings in a view context
-    private var colorScheme: ColorScheme? {
-        switch userSettings.appearanceMode {
-        case .light: return .light
-        case .dark: return .dark
-        default: return nil
+    // Helper function to avoid mutating operations in the view context
+    private func saveContextIfNeeded() {
+        let context = coreDataManager.container.viewContext
+        guard context.hasChanges else { return }
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
         }
     }
 }
 
-// CloudKit sync handler to manage iCloud sync status
+// Create a CloudKit sync handler to manage iCloud sync status
 class CloudKitSyncHandler {
-    // Create shared instance using a singleton pattern
-    static let shared = CloudKitSyncHandler()
-    
     private var ubiquitousKeyValueToken: NSObjectProtocol?
     
-    // Public initializer
     init() {
         setupUbiquitousKeyValueStoreObserver()
+        
+        // Try to sync NSUbiquitousKeyValueStore
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
@@ -48,6 +74,7 @@ class CloudKitSyncHandler {
     }
     
     private func setupUbiquitousKeyValueStoreObserver() {
+        // Add observer for changes to the key-value store
         ubiquitousKeyValueToken = NotificationCenter.default.addObserver(
             forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
             object: NSUbiquitousKeyValueStore.default,
@@ -65,52 +92,13 @@ class CloudKitSyncHandler {
         
         print("DEBUG: Received iCloud key-value store updates for keys: \(changedKeys)")
         
+        // Process each changed key
         for key in changedKeys {
+            // Handle specific key changes here if needed
             if key.contains("UserSettings") {
                 print("DEBUG: User settings changed in iCloud")
+                // Update local settings if needed
             }
-        }
-    }
-}
-
-// Main app with improved architecture to avoid mutating getters
-struct LogSnapApp: App {
-    // Stored property for CoreData context to avoid mutating getter issues
-    private let managedObjectContext: NSManagedObjectContext
-    
-    // StateObject for user settings
-    @StateObject private var userSettings = UserSettings()
-    
-    // Shared CloudKit handler
-    private let cloudSyncHandler: CloudKitSyncHandler
-    
-    // Initialize everything in init to avoid mutating operations in body
-    init() {
-        // Create CoreDataManager directly without using shared
-        let cdManager = CoreDataManager(userSettings: UserSettings())
-        self.managedObjectContext = cdManager.container.viewContext
-        self.cloudSyncHandler = CloudKitSyncHandler.shared
-    }
-    
-    var body: some Scene {
-        // Just use the stored context - no mutation required
-        WindowGroup {
-            LogSnapContentView(
-                viewContext: managedObjectContext,
-                saveAction: saveIfNeeded
-            )
-            .environmentObject(userSettings)
-        }
-    }
-    
-    // Method that takes context as parameter to avoid accessing self
-    private func saveIfNeeded(context: NSManagedObjectContext) {
-        guard context.hasChanges else { return }
-        
-        do {
-            try context.save()
-        } catch {
-            print("Error saving context: \(error)")
         }
     }
 }

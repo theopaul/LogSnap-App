@@ -1,0 +1,104 @@
+/* Tab Items */
+"Products" = "Products";
+"Suppliers" = "Suppliers";
+
+/* Product List */
+"Product List" = "Product List";
+"Add Product" = "Add Product";
+"Search products..." = "Search products...";
+"No products found" = "No products found";
+"Add your first product to get started!" = "Add your first product to get started!";
+
+/* Product Details */
+"Product Details" = "Product Details";
+"Edit Product" = "Edit Product";
+"SKU" = "SKU";
+"Category" = "Category";
+"Price" = "Price";
+"Currency" = "Currency";
+"MOQ" = "MOQ";
+"Dimensions" = "Dimensions";
+"Weight" = "Weight";
+"Materials" = "Materials";
+"Notes" = "Notes";
+"Created" = "Created";
+"Updated" = "Updated";
+"Delete Product" = "Delete Product";
+"Are you sure?" = "Are you sure?";
+"This action cannot be undone." = "This action cannot be undone.";
+"Cancel" = "Cancel";
+"Delete" = "Delete";
+
+/* Add/Edit Product */
+"New Product" = "New Product";
+"Product Name" = "Product Name";
+"Enter product name" = "Enter product name";
+"Enter SKU" = "Enter SKU";
+"Enter category" = "Enter category";
+"Enter price" = "Enter price";
+"Enter currency (e.g. USD)" = "Enter currency (e.g. USD)";
+"Enter MOQ" = "Enter MOQ";
+"Enter dimensions (WxHxD)" = "Enter dimensions (WxHxD)";
+"Enter weight" = "Enter weight";
+"Enter materials" = "Enter materials";
+"Enter notes" = "Enter notes";
+"Take Photo" = "Take Photo";
+"Choose from Library" = "Choose from Library";
+"Add Image" = "Add Image";
+"Save" = "Save";
+"Name is required" = "Name is required";
+"SKU is required" = "SKU is required";
+
+/* Supplier List */
+"Supplier List" = "Supplier List";
+"Add Supplier" = "Add Supplier";
+"Search suppliers..." = "Search suppliers...";
+"No suppliers found" = "No suppliers found";
+"Add your first supplier to get started!" = "Add your first supplier to get started!";
+
+/* Supplier Details */
+"Supplier Details" = "Supplier Details";
+"Edit Supplier" = "Edit Supplier";
+"Contact Person" = "Contact Person";
+"Email" = "Email";
+"Phone" = "Phone";
+"Address" = "Address";
+"Website" = "Website";
+"Delete Supplier" = "Delete Supplier";
+
+/* Add/Edit Supplier */
+"New Supplier" = "New Supplier";
+"Supplier Name" = "Supplier Name";
+"Enter supplier name" = "Enter supplier name";
+"Enter contact person name" = "Enter contact person name";
+"Enter email" = "Enter email";
+"Enter phone number" = "Enter phone number";
+"Enter address" = "Enter address";
+"Enter website" = "Enter website";
+"Name is required" = "Name is required";
+"Invalid email format" = "Invalid email format";
+
+/* Camera */
+"Photo Library" = "Photo Library";
+"Camera" = "Camera";
+"Take Photo" = "Take Photo";
+"Choose Photo" = "Choose Photo";
+
+/* Common */
+"Loading..." = "Loading...";
+"Error" = "Error";
+"Success" = "Success";
+"Information" = "Information";
+"OK" = "OK";
+"Yes" = "Yes";
+"No" = "No";
+"Settings" = "Settings";
+"Theme" = "Theme";
+"Dark Mode" = "Dark Mode";
+"Language" = "Language";
+"English" = "English";
+"Portuguese" = "Portuguese";
+"Save Changes" = "Save Changes";
+"Discard Changes" = "Discard Changes";
+"Unsaved Changes" = "Unsaved Changes";
+"Do you want to save your changes?" = "Do you want to save your changes?"; 

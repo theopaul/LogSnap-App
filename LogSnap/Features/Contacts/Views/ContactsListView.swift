@@ -16,7 +16,7 @@ struct ContactsListView: View {
                     .foregroundColor(.gray)
                 
                 TextField("Search contacts", text: $searchText)
-                    .onChange(of: searchText) { newValue in
+                    .onChange(of: searchText) { oldValue, newValue in
                         viewModel.searchText = newValue
                     }
                 
